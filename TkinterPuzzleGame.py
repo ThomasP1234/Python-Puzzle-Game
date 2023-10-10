@@ -238,9 +238,9 @@ class HangmanGUI():
 
     def search(self):
         self.lbl1.configure(text = "Found inside:")
-        container = self.searchEntry.get()
+        container = self.searchEntry.get().replace('A ', '').title().strip()
         lst = []
-        for key in c.Rooms[self.player_location]["Items"][container]:
+        for key in c.Rooms[self.player_location]['Items'][container]:
             lst.append(key)
         if self.DEBUGMode == True: print(lst)
         text = ""
@@ -253,7 +253,7 @@ class HangmanGUI():
         self.lbl3.configure(text = "{0}".format(text))
 
     def take(self):
-        input = self.takeEntry.get()
+        input = self.takeEntry.get().title().strip()
         for key in c.Rooms[self.player_location]["Items"]:
             if self.DEBUGMode == True: print(key)
             items = str(c.Rooms[self.player_location]["Items"][key])
@@ -295,8 +295,8 @@ class HangmanGUI():
         self.lbl5.config(text = "Inventory: {0}".format(c.Player_Inventory))
 
     def pick(self):
-        iteminput = self.useEntry.get()
-        doorinput = self.doorEntry.get()
+        iteminput = self.useEntry.get().title().strip()
+        doorinput = self.doorEntry.get().title().strip()
         num = self.player_location.replace('Room', '')
         doornum = doorinput + num
         if iteminput in c.Player_Inventory:
@@ -318,8 +318,8 @@ class HangmanGUI():
                         DrawMap.GameMap(self.player_location, self.canvas, self.NorthButton, c.Rooms[self.player_location]["Exits"]["North"]["State"], self.EastButton, c.Rooms[self.player_location]["Exits"]["East"]["State"], self.SouthButton, c.Rooms[self.player_location]["Exits"]["South"]["State"], self.WestButton, c.Rooms[self.player_location]["Exits"]["West"]["State"])
 
     def use(self):
-        iteminput = self.useEntry.get()
-        doorinput = self.doorEntry.get()
+        iteminput = self.useEntry.get().title().strip()
+        doorinput = self.doorEntry.get().title().strip()
         num = self.player_location.replace('Room', '')
         doornum = doorinput + num
         if iteminput in c.Player_Inventory:
@@ -355,9 +355,9 @@ class HangmanGUI():
         self.DEBUGButton.config(state = "disabled")
 
     def craft(self):
-        item1 = self.crafting1.get()
-        item2 = self.crafting2.get()
-        item3 = self.crafting3.get()
+        item1 = self.crafting1.get().title().strip()
+        item2 = self.crafting2.get().title().strip()
+        item3 = self.crafting3.get().title().strip()
         if item1 in c.Player_Inventory and item2 in c.Player_Inventory and item3 in c.Player_Inventory:
             if item1 in c.Craftitems and item2 in c.Craftitems and item3 in c.Craftitems:
                 for key in c.Crafts3:
