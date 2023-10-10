@@ -222,16 +222,16 @@ class HangmanGUI():
         lst = []
         for key in c.Rooms[self.player_location]["Items"]:
             arg = "A " + str(key)
-            if self.DEBUGMode == True: print(arg)
+            # if self.DEBUGMode == True: print(arg)
             lst.append(arg)
-            if self.DEBUGMode == True: print(lst)
+            # if self.DEBUGMode == True: print(lst)
             text = ""
             for string in lst:
                 string = string.replace("(", "")
                 string = string.replace(")", "")
                 string = string.replace("'", "")
                 text = text + string + "\n"
-                if self.DEBUGMode == True: print(text)
+                # if self.DEBUGMode == True: print(text)
                 self.lbl3.configure(text = "{0}".format(text))
         c.Explored[self.player_location] = 1
         self.searchButtonState()
@@ -242,31 +242,31 @@ class HangmanGUI():
         lst = []
         for key in c.Rooms[self.player_location]['Items'][container]:
             lst.append(key)
-        if self.DEBUGMode == True: print(lst)
+        # if self.DEBUGMode == True: print(lst)
         text = ""
         for item in lst:
             if item == ' ': continue
-            if self.DEBUGMode == True: print(item)
+            # if self.DEBUGMode == True: print(item)
             text = text + item + "\n"
-            if self.DEBUGMode == True: print(text)
+            # if self.DEBUGMode == True: print(text)
 
         self.lbl3.configure(text = "{0}".format(text))
 
     def take(self):
         input = self.takeEntry.get().title().strip()
         for key in c.Rooms[self.player_location]["Items"]:
-            if self.DEBUGMode == True: print(key)
+            # if self.DEBUGMode == True: print(key)
             items = str(c.Rooms[self.player_location]["Items"][key])
             if input in items:
                 dictionary = c.Rooms[self.player_location]["Items"][key]
-                if self.DEBUGMode == True: print(dictionary)
+                # if self.DEBUGMode == True: print(dictionary)
                 L = list(dictionary)
                 L.remove(input)
                 tup  = tuple(L)
                 c.Rooms[self.player_location]["Items"].update({key: tup})
 
                 c.Player_Inventory.append(input)
-                if self.DEBUGMode == True: print(c.Player_Inventory)
+                # if self.DEBUGMode == True: print(c.Player_Inventory)
         self.UpdateInventory()
         self.search()
 
@@ -278,7 +278,7 @@ class HangmanGUI():
 
     def go(self, direction):
         GoingTo = c.Rooms[self.player_location]['Exits'][direction]['Output']
-        if self.DEBUGMode == True: print(GoingTo)
+        # if self.DEBUGMode == True: print(GoingTo)
         self.player_location = GoingTo
 
         c.Player_Location = GoingTo
