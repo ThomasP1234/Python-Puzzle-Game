@@ -25,7 +25,7 @@ class HangmanGUI():
 
     background_colour = "#303030"
 
-    DEBUGMode = False
+    # DEBUGMode = False
 
     def __init__(self):
         self.window = Tk()
@@ -185,10 +185,10 @@ class HangmanGUI():
         placeholder3 = Label(self.commands, text = " ", bg = self.background_colour)
         placeholder3.grid(row = 4, column = 0)
 
-        self.DEBUGButton = Button(self.commands2, text = "ENABLE DEBUG MODE", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.DEBUG, width = 24, relief = RIDGE)
-        self.DEBUGButton.configure(foreground = "white")
-        # self.DEBUGButton.place(x = 10, y = 465)
-        self.DEBUGButton.grid(row = 1, column = 0)
+        # self.DEBUGButton = Button(self.commands2, text = "ENABLE DEBUG MODE", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.DEBUG, width = 24, relief = RIDGE)
+        # self.DEBUGButton.configure(foreground = "white")
+        # # self.DEBUGButton.place(x = 10, y = 465)
+        # self.DEBUGButton.grid(row = 1, column = 0)
 
 
 
@@ -350,9 +350,9 @@ class HangmanGUI():
                     self.lbl1.config(text = 'Wrong Door for this key')
                     self.lbl3.config(text = '')
 
-    def DEBUG(self):
-        self.DEBUGMode = True
-        self.DEBUGButton.config(state = "disabled")
+    # def DEBUG(self):
+    #     self.DEBUGMode = True
+    #     self.DEBUGButton.config(state = "disabled")
 
     def craft(self):
         item1 = self.crafting1.get().title().strip()
