@@ -27,28 +27,12 @@ class HangmanGUI():
 
     DEBUGMode = False
 
-
-    filename = "Gamesave.json"
-
-    data = {
-        "playerlocation" : c.Player_Location,
-        "playerinventory" : c.Player_Inventory,
-        "East1": c.Rooms["Room1"]["Exits"]["East"]['State'],
-        "West2": c.Rooms["Room2"]["Exits"]["West"]['State'],
-        "North2": c.Rooms["Room2"]["Exits"]["North"]['State'],
-        "South3": c.Rooms["Room3"]["Exits"]["South"]['State'],
-        "Items1": c.Rooms["Room1"]["Items"],
-        "Items2": c.Rooms["Room2"]["Items"],
-        "Items3": c.Rooms["Room3"]["Items"]
-    }
-
     def __init__(self):
         self.window = Tk()
         self.window.geometry("{0}x{1}+{2}+{3}".format(self.window_width, self.window_height, self.window_x, self.window_y))
         self.window.title("Puzzle Game")
         self.window.resizable(False, False)
         self.window.configure(bg = self.background_colour)
-        # self.window.iconbitmap('Puzzleicon.ico')
 
         self.inventory = Toplevel(self.window)
         self.inventory.geometry("{0}x{1}+{2}+{3}".format(self.window_width, self.inventory_height, self.inventory_x, self.inventory_y))
@@ -61,14 +45,12 @@ class HangmanGUI():
         self.commands.title("Commands")
         self.commands.resizable(False, False)
         self.commands.configure(bg = self.background_colour)
-        # self.commands.iconbitmap('Icon.ico')
 
         self.commands2 = Toplevel(self.window)
         self.commands2.geometry("{0}x{1}+{2}+{3}".format(self.commands_width, self.commands_height, self.commands2_x, self.commands2_y))
         self.commands2.title("Commands")
         self.commands2.resizable(False, False)
         self.commands2.configure(bg = self.background_colour)
-        # self.commands.iconbitmap('Icon.ico')
 
         self.window.focus_force()
     def draw(self):
@@ -155,7 +137,8 @@ class HangmanGUI():
         self.searchButton.configure(foreground = "white")
         self.searchButton.grid(row = 1, column = 0)
 
-
+        self.searchEntry = Entry(lblf, width = 29, bd = 4, bg = self.background_colour, relief = RIDGE, foreground = "white")
+        self.searchEntry.grid(row = 2, column = 0)
 
         lblf2 = LabelFrame(self.commands, text = "Take", bd = 4, bg = self.background_colour, relief = RIDGE)
         lblf2.configure(foreground = "white")
@@ -202,10 +185,10 @@ class HangmanGUI():
         placeholder3 = Label(self.commands, text = " ", bg = self.background_colour)
         placeholder3.grid(row = 4, column = 0)
 
-        self.DEBUGButton = Button(self.commands, text = "ENABLE DEBUG MODE", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.DEBUG, width = 24, relief = RIDGE)
+        self.DEBUGButton = Button(self.commands2, text = "ENABLE DEBUG MODE", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.DEBUG, width = 24, relief = RIDGE)
         self.DEBUGButton.configure(foreground = "white")
         # self.DEBUGButton.place(x = 10, y = 465)
-        self.DEBUGButton.grid(row = 5, column = 0)
+        self.DEBUGButton.grid(row = 1, column = 0)
 
 
 
@@ -233,20 +216,6 @@ class HangmanGUI():
 
         self.crafting3 = Entry(lblf4, width = 29, bd = 4, bg = self.background_colour, relief = RIDGE, foreground = "white")
         self.crafting3.grid(row = 6, column = 0)
-
-
-        # lblf5 = LabelFrame(self.commands2, text = "Load and Save", bd = 4, bg = self.background_colour, relief = RIDGE, foreground = "white")
-        # lblf5.grid(row = 1, column = 0)
-
-        # saveButton = Button(lblf5, text = "Save", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.Save, width = 24, relief = RIDGE, foreground = "white")
-        # saveButton.grid(row = 0, column = 0)
-
-        # loadButton = Button(lblf5, text = "Load", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.Load, width = 24, relief = RIDGE, foreground = "white")
-        # loadButton.grid(row = 1, column = 0)
-
-    def game(self):
-        pass
-
         
     def explore(self):
         self.lbl1.configure(text = "There is:")
@@ -269,21 +238,17 @@ class HangmanGUI():
 
     def search(self):
         self.lbl1.configure(text = "Found inside:")
+        container = self.searchEntry.get()
         lst = []
-        for key in c.Rooms[self.player_location]["Items"]:
-            lst.append(c.Rooms[self.player_location]["Items"][key])
+        for key in c.Rooms[self.player_location]["Items"][container]:
+            lst.append(key)
         if self.DEBUGMode == True: print(lst)
         text = ""
         for item in lst:
+            if item == ' ': continue
             if self.DEBUGMode == True: print(item)
-            L = list(item)
-            if self.DEBUGMode == True: print(L)
-            for string in L:
-                if string == ' ':
-                    continue
-                else:
-                    text = text + string + "\n"
-                    if self.DEBUGMode == True: print(text)
+            text = text + item + "\n"
+            if self.DEBUGMode == True: print(text)
 
         self.lbl3.configure(text = "{0}".format(text))
 
@@ -389,33 +354,6 @@ class HangmanGUI():
         self.DEBUGMode = True
         self.DEBUGButton.config(state = "disabled")
 
-    # def Load(self):
-    #     import json
-    #     fi = open(self.filename, "r")
-    #     self.data = fi.read()
-    #     jsondata = json.loads(self.data)
-    #     if self.DEBUGMode == True: print(self.data, jsondata)
-    #     self.player_location = c.Player_Location = jsondata["playerlocation"]
-    #     c.Player_Inventory = jsondata["playerinventory"]
-    #     c.East1['State'] = jsondata["East1"]
-    #     c.West2['State'] = jsondata["West2"]
-    #     c.North2['State'] = jsondata["North2"]
-    #     c.South3['State'] = jsondata["South3"]
-    #     c.Items1 = jsondata["Items1"]
-    #     c.Items2 = jsondata["Items2"]
-    #     c.Items3 = jsondata["Items3"]
-
-    #     self.canvas.delete('all')
-    #     import DrawMap
-    #     DrawMap.GameMap(self.player_location, self.canvas, self.NorthButton, c.Rooms[self.player_location]["Exits"]["North"]["State"], self.EastButton, c.Rooms[self.player_location]["Exits"]["East"]["State"], self.SouthButton, c.Rooms[self.player_location]["Exits"]["South"]["State"], self.WestButton, c.Rooms[self.player_location]["Exits"]["West"]["State"])
-
-    #     self.UpdateInventory()
-        
-    # def Save(self):
-    #     import json
-    #     with open(self.filename, 'w') as outfile:
-    #         json.dump(self.data, outfile)
-
     def craft(self):
         item1 = self.crafting1.get()
         item2 = self.crafting2.get()
@@ -432,7 +370,6 @@ class HangmanGUI():
                         self.UpdateInventory()
 
     def run(self):
-        # self.game()
         self.draw()
         self.searchButtonState()
         self.window.mainloop()
