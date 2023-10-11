@@ -3,7 +3,8 @@
 from tkinter import *
 import config as c
 
-class HangmanGUI():
+class PuzzleGUI():
+    # Initialize Variables
     player_location = c.Player_Location
 
     window_width = 800
@@ -24,28 +25,33 @@ class HangmanGUI():
     inventory_y = window_y + window_height + 40
 
     background_colour = "#303030"
+    default_font = 'Helvetica'
 
     # DEBUGMode = False
 
-    def __init__(self):
+    def __init__(self): # Setup the Windows
+        # Setup Main Window
         self.window = Tk()
         self.window.geometry("{0}x{1}+{2}+{3}".format(self.window_width, self.window_height, self.window_x, self.window_y))
         self.window.title("Puzzle Game")
         self.window.resizable(False, False)
         self.window.configure(bg = self.background_colour)
 
+        # Setup 'Inventory' Window
         self.inventory = Toplevel(self.window)
         self.inventory.geometry("{0}x{1}+{2}+{3}".format(self.window_width, self.inventory_height, self.inventory_x, self.inventory_y))
         self.inventory.title("Inventory")
         self.inventory.resizable(False, False)
         self.inventory.configure(bg = self.background_colour)
 
+        # Setup 'Commands' Window
         self.commands = Toplevel(self.window)
         self.commands.geometry("{0}x{1}+{2}+{3}".format(self.commands_width, self.commands_height, self.commands_x, self.commands_y))
         self.commands.title("Commands")
         self.commands.resizable(False, False)
         self.commands.configure(bg = self.background_colour)
 
+        # Setup 'Commands2' Window
         self.commands2 = Toplevel(self.window)
         self.commands2.geometry("{0}x{1}+{2}+{3}".format(self.commands_width, self.commands_height, self.commands2_x, self.commands2_y))
         self.commands2.title("Commands")
@@ -53,8 +59,9 @@ class HangmanGUI():
         self.commands2.configure(bg = self.background_colour)
 
         self.window.focus_force()
-    def draw(self):
-        title = Label(self.window, text = 'Puzzle Game', font = 'Orbitron 50 bold', bg = self.background_colour)
+
+    def draw(self): # Draw Elements on the Windows
+        title = Label(self.window, text = 'Puzzle Game', font = f'{self.default_font} 50 bold', bg = self.background_colour)
         title.pack()
 
         title.config(foreground="white")
@@ -74,19 +81,19 @@ class HangmanGUI():
         lblf.configure(foreground = "white")
         lblf.place(x = 40, y = 100, width = 400, height = 300)
 
-        self.lbl1 = Label(lblf, text = "", font = 'Orbitron 15', bg = self.background_colour, foreground = "white")
+        self.lbl1 = Label(lblf, text = "", font = f'{self.default_font} 15', bg = self.background_colour, foreground = "white")
         # self.lbl1.place(x = 20, y = 100)
         self.lbl1.grid(row = 0, column = 0)
 
-        self.lbl3 = Label(lblf, text = "", font = "Orbitron 12", bg = self.background_colour, foreground = "white")
+        self.lbl3 = Label(lblf, text = "", font = f'{self.default_font} 12', bg = self.background_colour, foreground = "white")
         # self.lbl3.place(x = 20, y = 130)
         self.lbl3.grid(row = 1, column = 0)
 
 
-        self.lbl2 = Label(self.window, text = "Map:", font = 'Orbitron 20', bg = self.background_colour, foreground = "white")
+        self.lbl2 = Label(self.window, text = "Map:", font = f'{self.default_font} 20', bg = self.background_colour, foreground = "white")
         self.lbl2.place(x = 515, y = 132)
 
-        self.lbl5 = Label(self.inventory, text = "Inventory:", font = "Orbitron 15", bg = self.background_colour, foreground = "white")
+        self.lbl5 = Label(self.inventory, text = "Inventory:", font = f'{self.default_font} 15', bg = self.background_colour, foreground = "white")
         self.lbl5.place(x = 10, y = 10)
 
     def MapButtons(self):
@@ -101,19 +108,19 @@ class HangmanGUI():
         placeholder2 = Label(lbl4, text = "            ", bg = self.background_colour)
         placeholder2.grid(row = 0, column = 4)
 
-        self.NorthButton = Button(lbl4, text = "↑", font = "Orbitron 10", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda direction = "North": self.go(direction), width = 2, relief = RIDGE, foreground = "white")
+        self.NorthButton = Button(lbl4, text = "↑", font = f'{self.default_font} 10', bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda direction = "North": self.go(direction), width = 2, relief = RIDGE, foreground = "white")
         # self.NorthButton.place(x = 103, y = 195, anchor = CENTER)
         self.NorthButton.grid(row = 0, column = 2)
 
-        self.EastButton = Button(lbl4, text = "→", font = "Orbitron 10", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda direction = "East": self.go(direction), width = 2, relief = RIDGE, foreground = "white")
+        self.EastButton = Button(lbl4, text = "→", font = f'{self.default_font} 10', bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda direction = "East": self.go(direction), width = 2, relief = RIDGE, foreground = "white")
         # self.EastButton.place(x = 175, y = 215, anchor = CENTER)
         self.EastButton.grid(row = 1, column = 3) 
 
-        self.SouthButton = Button(lbl4, text = "↓", font = "Orbitron 10", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda direction = "South": self.go(direction), width = 2, relief = RIDGE, foreground = "white")
+        self.SouthButton = Button(lbl4, text = "↓", font = f'{self.default_font} 10', bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda direction = "South": self.go(direction), width = 2, relief = RIDGE, foreground = "white")
         # self.SouthButton.place(x = 103, y = 245, anchor = CENTER)
         self.SouthButton.grid(row = 2, column = 2)
 
-        self.WestButton = Button(lbl4, text = "←", font = "Orbitron 10", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda direction = "West": self.go(direction), width = 2, relief = RIDGE, foreground = "white")
+        self.WestButton = Button(lbl4, text = "←", font = f'{self.default_font} 10', bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda direction = "West": self.go(direction), width = 2, relief = RIDGE, foreground = "white")
         # self.WestButton.place(x = 30, y = 215, anchor = CENTER)
         self.WestButton.grid(row = 1, column = 1)
         
@@ -374,5 +381,5 @@ class HangmanGUI():
         self.searchButtonState()
         self.window.mainloop()
     
-ui = HangmanGUI()
+ui = PuzzleGUI()
 ui.run()
